@@ -11,21 +11,9 @@ pub struct Ticket {
 
 impl Ticket {
     pub fn new(title: String, description: String, status: String) -> Ticket {
-        if title.is_empty() {
-            panic!("Title cannot be empty");
-        }
-        if title.len() > 50 {
-            panic!("Title cannot be longer than 50 bytes");
-        }
-        if description.is_empty() {
-            panic!("Description cannot be empty");
-        }
-        if description.len() > 500 {
-            panic!("Description cannot be longer than 500 bytes");
-        }
-        if status != "To-Do" && status != "In Progress" && status != "Done" {
-            panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
-        }
+        Self::check_title(&title);
+        Self::check_desc(&description);
+        Self::check_status(&status);
 
         Ticket {
             title,
@@ -37,13 +25,52 @@ impl Ticket {
     pub fn title(&self) -> &String {
         &self.title
     }
-
+    
     pub fn description(&self) -> &String {
         &self.description
     }
-
+    
     pub fn status(&self) -> &String {
         &self.status
+    }
+
+    pub fn set_title(&mut self, new_title: String) {
+        Self::check_title(&new_title);
+        self.title = new_title;
+    }
+
+    pub fn set_description(&mut self, new_desc: String) {
+        Self::check_desc(&new_desc);
+        self.description = new_desc;
+    }
+
+    pub fn set_status(&mut self, new_status: String) {
+        Self::check_status(&new_status);
+        self.status = new_status;
+    }
+
+    fn check_title(title: &String) {
+        if title.is_empty() {
+            panic!("Title cannot be empty");
+        }
+        if title.len() > 50 {
+            panic!("Title cannot be longer than 50 bytes");
+        }
+    }
+
+    fn check_desc(description: &String) {
+        if description.is_empty() {
+            panic!("Description cannot be empty");
+        }
+        if description.len() > 500 {
+            panic!("Description cannot be longer than 500 bytes");
+        }
+    }
+    
+    fn check_status(status: &String) {
+        if status != "To-Do" && status != "In Progress" && status != "Done" {
+            panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
+        }
     }
 }
 
