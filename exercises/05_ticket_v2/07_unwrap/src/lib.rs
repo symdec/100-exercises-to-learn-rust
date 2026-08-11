@@ -2,7 +2,16 @@
 //   When the description is invalid, instead, it should use a default description:
 //   "Description not provided".
 fn easy_ticket(title: String, description: String, status: Status) -> Ticket {
-    todo!()
+    let new_desc: String;
+    if description.is_empty() || description.len() > 500 {
+        new_desc = "Description not provided".to_string();
+    } else {
+        new_desc =description;
+    }
+    match Ticket::new(title, new_desc, status) {
+        Ok(ticket) => ticket,
+        Err(err) => { panic!("{}", err); },
+    }
 }
 
 #[derive(Debug, PartialEq, Clone)]
